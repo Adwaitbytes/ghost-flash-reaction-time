@@ -1,0 +1,160 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 222.2 84% 4.9%; /* Default dark background */
+    --foreground: 210 40% 98%; /* Default light foreground */
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    /* Using custom colors from tailwind.config.ts for primary/accent if needed elsewhere */
+    --primary: 260 80% 70%; /* primary-purple HSL approx */
+    --primary-foreground: 210 40% 98%;
+
+    --secondary: 195 80% 60%; /* bright-blue HSL approx */
+    --secondary-foreground: 222.2 47.4% 11.2%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 195 80% 60%; /* bright-blue HSL approx */
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 195 80% 60%; /* bright-blue HSL approx for ring */
+
+    --radius: 0.75rem; /* Slightly larger radius for modern feel */
+  }
+
+  /* Override for our specific dark theme */
+  body {
+    --background: hsl(235, 15%, 10%); /* dark-bg */
+    --foreground: hsl(210, 40%, 95%);
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-dark-bg text-foreground font-grotesk antialiased;
+    min-height: 100vh;
+    overflow-x: hidden; /* Prevent horizontal scroll */
+    position: relative;
+  }
+  
+  /* Modern Gen Z inspired background */
+  body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(125deg, #10101A 0%, #191927 25%, #2C1F55 50%, #191927 75%, #10101A 100%);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+  }
+  
+  /* Animated blobs in background */
+  body::after {
+    content: "";
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    background-image: 
+      radial-gradient(circle at 20% 30%, rgba(176, 112, 255, 0.1) 0%, transparent 40%),
+      radial-gradient(circle at 80% 60%, rgba(30, 174, 219, 0.15) 0%, transparent 30%),
+      radial-gradient(circle at 50% 90%, rgba(249, 115, 115, 0.1) 0%, transparent 40%),
+      radial-gradient(circle at 80% 10%, rgba(61, 235, 178, 0.1) 0%, transparent 30%);
+    filter: blur(40px);
+    opacity: 0.7;
+    animation: blobPulse 20s alternate infinite;
+  }
+
+  #root {
+    @apply w-full min-h-screen flex flex-col items-center justify-center p-4;
+  }
+}
+
+@layer components {
+  .glass-effect {
+    @apply bg-glass-bg backdrop-filter backdrop-blur-lg border border-glass-border shadow-xl;
+    position: relative;
+    z-index: 10;
+  }
+  
+  /* Add cool inner glow to the glass effect */
+  .glass-effect::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(120deg, rgba(255,255,255,0.3), rgba(155, 135, 245, 0.4), rgba(30, 174, 219, 0.2), rgba(255,255,255,0.1));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50% }
+  50% { background-position: 100% 50% }
+  100% { background-position: 0% 50% }
+}
+
+@keyframes blobPulse {
+  0% { 
+    opacity: 0.7;
+    transform: scale(1) rotate(0deg);
+  }
+  50% { 
+    opacity: 0.8;
+    transform: scale(1.05) rotate(5deg);
+  }
+  100% { 
+    opacity: 0.7;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+@layer utilities {
+  .animate-background-pan {
+    animation: gradientBG 15s ease infinite;
+  }
+  
+  .animate-pulse-glow {
+    animation: pulsating 1.5s ease infinite alternate;
+  }
+}
+
+@keyframes pulsating {
+  0% { 
+    opacity: 1; 
+    filter: brightness(1);
+  }
+  100% { 
+    opacity: 0.8; 
+    filter: brightness(1.2);
+  }
+}
